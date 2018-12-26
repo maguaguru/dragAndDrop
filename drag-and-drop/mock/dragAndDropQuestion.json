@@ -1,0 +1,42 @@
+{
+  "highlight": "FF5555",
+  "width": 980,
+  "height": 569,
+  "workarea": {
+    "background": {
+      "width": 980,
+      "height": 569,
+      "url": "images/d_d_bd_01.jpg"
+    },
+    "targets": [
+      {
+        "id": "001",
+        "x": 10,
+        "y": 10,
+        "type": "target",
+        "shape": {
+          "type": "rectangle",
+          "width": 100,
+          "height": 30,
+          "color": "#CCCCCC"
+        }
+      }
+    ],
+    "labels": [
+      {
+        "id": "001_label",
+        "x": 10,
+        "y": 10,
+        "type": "dd_label",
+        "shape": {
+          "type": "rectangle",
+          "width": 100,
+          "height": 30,
+          "color": "#55FF55"
+        },
+        "textbox": {
+        }
+      }
+    ]
+  }
+}

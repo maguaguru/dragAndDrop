@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux'
 import { StyledWorkarea } from '../styledComponents';
 
-export class WorkArea extends PureComponent {
+
+class WorkArea extends PureComponent {
     constructor (props) {
         super(props)
     }
@@ -15,3 +17,5 @@ export class WorkArea extends PureComponent {
         )
     }
 }
+
+export default WorkArea
