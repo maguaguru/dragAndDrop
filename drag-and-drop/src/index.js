@@ -7,7 +7,6 @@ import App from './main/dev/dragAndDrop/app/App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 ReactDOM.render(<Provider store={store}>
     <h2 className="text-center">Drag&drop question test</h2>
     <App />

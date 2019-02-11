@@ -9,7 +9,6 @@ class Targets extends PureComponent {
           <React.Fragment>
               {
                   this.props.targets.map((item, i) => {
-                      console.log('i ', i)
                       return (<Target key={`item_${i}`} item={item}/>)
                   })
               }
