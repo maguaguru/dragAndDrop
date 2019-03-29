@@ -1,15 +1,18 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import DragObject from './../Components/DragObject'
+import UserAnswerActions from '../Redux/UserAnswerReducer';
 
 class DragObjects extends PureComponent {
 
     constructor(props){
         super(props)
-        this.handleDrop = this.handleDrop.bind(this)
+        this.handleEndDrag = this.handleEndDrag.bind(this)
     }
 
-    handleDrop(id){
-        console.log("handleDrop! " + id)
+    handleEndDrag(item){
+        console.log(" !!! handleEndDrag! " + item)
+        this.props.addDragObject(item)
     }
 
     render () {
@@ -18,7 +21,7 @@ class DragObjects extends PureComponent {
           <React.Fragment>
               {
                   this.props.labels.map((item, i) => {
-                      return (<DragObject key={`item_${i}`} item={item} handleDrop={(id) => this.handleDrop(id)}/>)
+                      return (<DragObject key={`item_${i}`} item={item} handleEndDrag={(id) => this.handleEndDrag(id)}/>)
                   })
               }
           </React.Fragment>
@@ -27,4 +30,8 @@ class DragObjects extends PureComponent {
     }
 }
 
-export default DragObjects
+const mapDispatchToProps = (dispatch) => ({
+    addDragObject: (dragObject) => dispatch(UserAnswerActions.addDragObject(dragObject)),
+})
+
+export default connect(null,mapDispatchToProps)(DragObjects)

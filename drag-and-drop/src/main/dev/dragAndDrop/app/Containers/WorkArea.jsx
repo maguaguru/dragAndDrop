@@ -1,51 +1,59 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
-import Background from './../Components/Background'
+import Background from './../Components/Background';
 import QuestionDataActions from '../Redux/QuestionDataReducer';
 import { StyledWorkarea } from '../styledComponents';
 import DragObjects from './DragObjects';
 import Targets from './Targets';
-
+import UserAnswer from './UserAnswer';
 
 class WorkArea extends Component {
 
     componentDidMount() {
-        const {questionDataUrl, loadQuestionData} = this.props
-        loadQuestionData(questionDataUrl)
+        const { questionDataUrl, loadQuestionData } = this.props;
+        loadQuestionData(questionDataUrl);
     }
 
-    render () {
-        const {loadingStatus,errorCode, width, height, workarea} = this.props.questionData
+    render() {
+        const { loadingStatus, errorCode, width, height, workarea } = this.props.questionData;
+        const { dragItems } = this.props;
 
-        console.log('workarea.labels: ', workarea.labels)
+        console.log('workarea.labels: ', workarea.labels);
         return (
           <React.Fragment>
               {loadingStatus !== 'error' ?
                 <StyledWorkarea x={this.props.x} y={this.props.y} width={`${width}px`} height={`${height}px`}>
                     <Background background={workarea.background}></Background>
                     {workarea.targets && workarea.targets.length &&
-                    <Targets targets={workarea.targets}/>}
+                    <Targets targets={workarea.targets} />
+                    }
                     {workarea.labels && workarea.labels.length &&
-                          <DragObjects labels={workarea.labels}/>}
+                    <DragObjects labels={workarea.labels} />
+                    }
+                    {dragItems &&
+                    <UserAnswer dragItems={dragItems} />
+                    }
+
                 </StyledWorkarea>
                 :
                 <Alert color="danger">Error loading data: {errorCode}</Alert>
               }
           </React.Fragment>
 
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     questionDataUrl: state.settings.questionDataUrl,
-    questionData: state.questionData
+    questionData: state.questionData,
+    dragItems: state.userAnswer.dragObjects
 
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
     loadQuestionData: (url) => dispatch(QuestionDataActions.loadQuestionData(url)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkArea)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkArea);

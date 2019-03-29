@@ -17,7 +17,7 @@ const Types = {
 const chessSquareTarget = {
     canDrop(props, monitor) {
         // You can disallow drop based on props or item
-        const item = monitor.getItem();
+        //const item = monitor.getItem();
         return true;
         //return canMakeChessMove(item.fromPosition, props.position);
     },
@@ -49,6 +49,7 @@ const chessSquareTarget = {
 
         // Obtain the dragged item
         const item = monitor.getItem();
+        props.handleDrop(props.target.id, item.id)
 
         // You can do something with it
         //ChessActions.movePiece(item.fromPosition, props.position);
@@ -56,7 +57,8 @@ const chessSquareTarget = {
         // You can also do nothing and return a drop result,
         // which will be available as monitor.getDropResult()
         // in the drag source's endDrag() method
-        return { moved: true };
+        //return { moved: true };
+        return {targetId: props.target.id, position: {x: props.target.x, y: props.target.y}}
     }
 };
 
@@ -79,14 +81,14 @@ function collect(connect, monitor) {
 class Target extends Component {
 
     render() {
-        const { id, x, y, shape } = this.props.item;
+        const { id, x, y, shape } = this.props.target;
         // These props are injected by React DnD,
         // as defined by your `collect` function above:
         const { isOver, canDrop, connectDropTarget } = this.props;
         const backgroundColor = isOver ? 'lightgreen' : shape.color
 
         return connectDropTarget(
-          <div id={id} className="target" style={{ position: 'absolute', top: `${x}px`, left: `${y}px` }}>
+          <div id={id} className="target" style={{ position: 'absolute', top: `${y}px`, left: `${x}px` }}>
               {shape && shape.type === 'rectangle' &&
               <Rectangle
                 width={`${shape.width}px`}

@@ -11,8 +11,20 @@
     "targets": [
       {
         "id": "001",
-        "x": 260,
+        "x": 280,
         "y": 174,
+        "type": "target",
+        "shape": {
+          "type": "rectangle",
+          "width": 180,
+          "height": 32,
+          "color": "#CCCCCC"
+        }
+      },
+      {
+        "id": "002",
+        "x": 280,
+        "y": 274,
         "type": "target",
         "shape": {
           "type": "rectangle",
@@ -25,9 +37,10 @@
     "labels": [
       {
         "id": "001_label",
-        "x": 0,
-        "y": 0,
+        "x": 10,
+        "y": 10,
         "type": "dd_label",
+        "counts": 1,
         "shape": {
           "type": "rectangle",
           "width": 180,
@@ -37,7 +50,29 @@
         "textbox": {
           "text": "label1"
         }
+      },
+      {
+        "id": "002_label",
+        "x": 10,
+        "y": 100,
+        "type": "dd_label",
+        "counts": 1,
+        "shape": {
+          "type": "rectangle",
+          "width": 180,
+          "height": 32,
+          "color": "#55FF55"
+        },
+        "textbox": {
+          "text": "label2"
+        }
       }
     ]
-  }
+  },
+  "rightAnswer": [
+    {
+      "targetId": "001",
+      "labelId": "001_label"
+    }
+  ]
 }

@@ -1,4 +1,5 @@
 import React, { PureComponent }from 'react';
+import DragObjectItem from './DragObjectItem'
 import { Rectangle } from './../styledComponents'
 import { DragSource } from 'react-dnd';
 
@@ -43,7 +44,19 @@ const cardSource = {
             return;
         }
 
-        return props.handleDrop(props.item.id);
+        const item = monitor.getItem();
+        console.log("Drag object item: ", item);
+
+        const target = monitor.getDropResult()
+        console.log("Drag object --> Target: ", target);
+
+        const dragAnswerItem = {
+            ...props.item,
+            x: target.position.x,
+            y: target.position.y
+        }
+
+        return props.handleEndDrag(dragAnswerItem);
 
         // When dropped on a compatible target, do something.
         // Read the original dragged item from getItem():
@@ -79,24 +92,24 @@ class DragObject extends PureComponent {
     render () {
         // These props are injected by React DnD,
         // as defined by your `collect` function above:
-        const { isDragging, connectDragSource} = this.props;
+        const {connectDragSource} = this.props;
         const {id, x, y, shape, textbox} = this.props.item
 
         return connectDragSource(
-          <div id={id} className="dragObject" style={{ position: 'absolute', top: `${x}px`, left: `${y}px`}}>
-              <span>Test</span>
-          </div>
+         <div id={id} className="dragObject" style={{ position: 'absolute', top: `${y}px`, left: `${x}px` }}>
+             {shape && shape.type === 'rectangle' &&
+             <Rectangle
+               width={`${shape.width}px`}
+               height={`${shape.height}px`}
+               color={shape.color}>
+                 {textbox &&
+                 <span>{textbox.text}</span>
+                 }
+             </Rectangle>
+             }
+         </div>
         )
-                {/*{shape && shape.type === 'rectangle' &&*/}
-                  {/*<Rectangle*/}
-                    {/*width={`${shape.width}px`}*/}
-                    {/*height={`${shape.height}px`}*/}
-                    {/*color={shape.color}>*/}
-                      {/*{textbox &&*/}
-                      {/*<span>{textbox.text}</span>*/}
-                      {/*}*/}
-                  {/*</Rectangle>*/}
-                  {/*}*/}
+
     }
 }
 
