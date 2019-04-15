@@ -6,7 +6,7 @@ import { reducer as UserAnswerReducer } from './UserAnswerReducer'
 export const mainReducer =  combineReducers({
     settings: SettingsReducer,
     questionData: QuestionDataReducer,
-    userAnswer: UserAnswerReducer
+    answerData: UserAnswerReducer
 })
 
 

@@ -1,5 +1,4 @@
 import React, { PureComponent }from 'react';
-import DragObjectItem from './DragObjectItem'
 import { Rectangle } from './../styledComponents'
 import { DragSource } from 'react-dnd';
 
@@ -56,7 +55,7 @@ const cardSource = {
             y: target.position.y
         }
 
-        return props.handleEndDrag(dragAnswerItem);
+        return props.handleEndDrag(dragAnswerItem, target.targetId, target.labelId);
 
         // When dropped on a compatible target, do something.
         // Read the original dragged item from getItem():
@@ -86,7 +85,6 @@ function collect(connect, monitor) {
     };
 }
 
-
 class DragObject extends PureComponent {
 
     render () {
@@ -95,8 +93,14 @@ class DragObject extends PureComponent {
         const {connectDragSource} = this.props;
         const {id, x, y, shape, textbox} = this.props.item
 
+        const style = {
+            position: 'absolute',
+            top: `${y}px`,
+            left: `${x}px`
+        }
+
         return connectDragSource(
-         <div id={id} className="dragObject" style={{ position: 'absolute', top: `${y}px`, left: `${x}px` }}>
+         <div id={id} className="dragObject" style={{...style}}>
              {shape && shape.type === 'rectangle' &&
              <Rectangle
                width={`${shape.width}px`}

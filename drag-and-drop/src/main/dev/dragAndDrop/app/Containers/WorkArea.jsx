@@ -17,7 +17,7 @@ class WorkArea extends Component {
 
     render() {
         const { loadingStatus, errorCode, width, height, workarea } = this.props.questionData;
-        const { dragItems } = this.props;
+        const { userAnswer } = this.props;
 
         console.log('workarea.labels: ', workarea.labels);
         return (
@@ -31,8 +31,8 @@ class WorkArea extends Component {
                     {workarea.labels && workarea.labels.length &&
                     <DragObjects labels={workarea.labels} />
                     }
-                    {dragItems &&
-                    <UserAnswer dragItems={dragItems} />
+                    {userAnswer &&
+                    <UserAnswer userAnswer={userAnswer} />
                     }
 
                 </StyledWorkarea>
@@ -48,7 +48,7 @@ class WorkArea extends Component {
 const mapStateToProps = (state) => ({
     questionDataUrl: state.settings.questionDataUrl,
     questionData: state.questionData,
-    dragItems: state.userAnswer.dragObjects
+    userAnswer: state.answerData.userAnswer
 
 });
 

@@ -48,8 +48,7 @@ const chessSquareTarget = {
         }
 
         // Obtain the dragged item
-        const item = monitor.getItem();
-        props.handleDrop(props.target.id, item.id)
+        //const item = monitor.getItem();
 
         // You can do something with it
         //ChessActions.movePiece(item.fromPosition, props.position);

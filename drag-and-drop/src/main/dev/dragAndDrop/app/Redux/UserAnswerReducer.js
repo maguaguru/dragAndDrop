@@ -2,53 +2,63 @@ import Immutable from 'seamless-immutable';
 import { createReducer, createActions } from 'reduxsauce';
 
 export const INITIAL_STATE = Immutable({
-    answer: [],
-    dragObjects: []
+    userAnswer: []
 });
 
 const { Types, Creators } = createActions({
-    addUserAnswer: ['targetId', 'labelId'],
-    addDragObject: [ 'dragObject']
+    addAnswer: ['answerItem', 'targetId'],
+    replaceAnswer: ['answerItem', 'targetId'],
+    removeAnswer: ['targetId']
 });
 
 export const UserUanserTypes = Types;
 export default Creators;
 
-export const addUserAnswer = (state, { targetId, labelId }) =>
+
+export const addAnswer = (state, { answerItem, targetId }) =>
   state.merge(
-    state.answer.some((answerItem) => (answerItem.targetId === targetId && answerItem.labelId === labelId)) ?
+    state.userAnswer.some((userAnswerItem) => (userAnswerItem.answer.targetId === targetId && userAnswerItem.answer.labelId === answerItem.id)) ?
       {
-          answer: [
-              ...state.answer,
-          ]
-      }
-      :
+          userAnswer: [...state.userAnswer]
+      } :
       {
-          answer: [
-              ...state.answer,
-              { targetId: targetId, labelId: labelId }
+          userAnswer: [...state.userAnswer,
+              {
+                  answer: { targetId: targetId, labelId: answerItem.id },
+                  answerItem: answerItem
+              }
           ]
+
       }
   );
 
-export const addDragObject = (state, { dragObject }) =>
+export const replaceAnswer = (state, { answerItem, targetId }) =>
   state.merge(
-    state.dragObjects.some((dragItem) => dragItem.id === dragObject.id) ?
-      {
-          dragObjects: [
-              ...state.dragObjects,
-          ]
-      }
-      :
-      {
-          dragObjects: [
-              ...state.dragObjects,
-              dragObject
-          ]
-      }
+    {
+        userAnswer: state.userAnswer.map((userAnswerItem) =>
+          userAnswerItem.answer.targetId ===  targetId && userAnswerItem.answer.labelId !== answerItem.id ?
+          {
+              answer: { targetId: userAnswerItem.answer.targetId, labelId: answerItem.id },
+              answerItem: answerItem
+          }
+          : userAnswerItem
+        )
+    }
   );
+
+export const removeAnswer = (state, { targetId }) =>
+  state.merge(
+    {
+        userAnswer: state.userAnswer.filter((userAnswerItem) =>
+          userAnswerItem.answer.targetId !== targetId
+        )
+    }
+  );
+
+
 
 export const reducer = createReducer(INITIAL_STATE, {
-    [Types.ADD_USER_ANSWER]: addUserAnswer,
-    [Types.ADD_DRAG_OBJECT]: addDragObject
+    [Types.ADD_ANSWER]: addAnswer,
+    [Types.REPLACE_ANSWER]: replaceAnswer,
+    [Types.REMOVE_ANSWER]: removeAnswer
 });
